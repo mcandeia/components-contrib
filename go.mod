@@ -258,6 +258,8 @@ require (
 	github.com/devigned/tab v0.1.1 // indirect
 	github.com/dghubble/sling v1.3.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
+	github.com/diegoholiveira/jsonlogic v2.3.1+incompatible
+	github.com/diegoholiveira/jsonlogic/v3 v3.2.4
 	github.com/dimchansky/utfbom v1.1.1 // indirect
 	github.com/dvsekhvalnov/jose2go v1.5.0 // indirect
 	github.com/eapache/go-xerial-snappy v0.0.0-20180814174437-776d5712da21 // indirect

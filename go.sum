@@ -635,6 +635,10 @@ github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f/go.mod h1:cu
 github.com/dgryski/go-sip13 v0.0.0-20181026042036-e10d5fee7954/go.mod h1:vAd38F8PWV+bWy6jNmig1y/TA+kYO4g3RSRF0IAv0no=
 github.com/didip/tollbooth v4.0.2+incompatible h1:fVSa33JzSz0hoh2NxpwZtksAzAgd7zjmGO20HCZtF4M=
 github.com/didip/tollbooth v4.0.2+incompatible/go.mod h1:A9b0665CE6l1KmzpDws2++elm/CsuWBMa5Jv4WY0PEY=
+github.com/diegoholiveira/jsonlogic v2.3.1+incompatible h1:DO80KBZy4HzIYlirDN5Z0NKsg1IK+IUiw/cu3z2NA1s=
+github.com/diegoholiveira/jsonlogic v2.3.1+incompatible/go.mod h1:jVLve2Xh7aEJep0nNAYlb/Ookjl4qIHcU8TqFPg99lI=
+github.com/diegoholiveira/jsonlogic/v3 v3.2.4 h1:3CbHnCj3ZYIyD6cVSSKeJuouG0GzfRxx0K3Q02QBboE=
+github.com/diegoholiveira/jsonlogic/v3 v3.2.4/go.mod h1:9oE8z9G+0OMxOoLHF3fhek3KuqD5CBqM0B6XFL08MSg=
 github.com/dimchansky/utfbom v1.1.0/go.mod h1:rO41eb7gLfo8SF1jd9F8HplJm1Fewwi4mQvIirEdv+8=
 github.com/dimchansky/utfbom v1.1.1 h1:vV6w1AhK4VMnhBno/TPVCoK9U/LP0PkLCS9tbxHdi/U=
 github.com/dimchansky/utfbom v1.1.1/go.mod h1:SxdoEBH5qIqFocHMyGOXVAybYJdr71b1Q/j0mACtrfE=
