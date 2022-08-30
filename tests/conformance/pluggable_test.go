@@ -14,13 +14,12 @@ limitations under the License.
 package conformance
 
 import (
-	"encoding/json"
 	"os"
-	"strings"
 	"testing"
 
 	confState "github.com/dapr/components-contrib/tests/conformance/state"
 	"github.com/dapr/components-contrib/tests/conformance/utils"
+	"gopkg.in/yaml.v3"
 
 	"github.com/dapr/dapr/pkg/components/state"
 	"github.com/dapr/kit/logger"
@@ -38,16 +37,14 @@ func TestPluggableConformance(t *testing.T) {
 		}
 
 		var componentMetadata map[string]string
-		if metadataPath, ok := os.LookupEnv("DAPR_CONFORMANCE_COMPONENT_METADATA_FILE"); ok {
-			f, err := os.ReadFile(metadataPath)
-			require.NoError(t, err)
-			json.Unmarshal(f, &componentMetadata)
+		if metadata, ok := os.LookupEnv("DAPR_CONFORMANCE_COMPONENT_METADATA"); ok {
+			require.NoError(t, yaml.Unmarshal([]byte(metadata), &componentMetadata))
 		}
 
 		operations, allOperations := []string{}, true
 		if operationsList, ok := os.LookupEnv("DAPR_CONFORMANCE_COMPONENT_OPERATIONS"); ok {
 			allOperations = false
-			operations = strings.Split(operationsList, ",")
+			require.NoError(t, yaml.Unmarshal([]byte(operationsList), &operations))
 		}
 		stateStore := state.NewGRPCStateStore(l, func(_ string) string {
 			return socket
