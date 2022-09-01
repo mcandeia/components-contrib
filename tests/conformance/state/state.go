@@ -225,7 +225,6 @@ func ConformanceTests(t *testing.T, props map[string]string, statestore state.St
 		err := statestore.Init(state.Metadata{
 			Base: metadata.Base{Properties: props},
 		})
-		fmt.Println(err)
 		assert.Nil(t, err)
 	})
 
@@ -254,7 +253,6 @@ func ConformanceTests(t *testing.T, props map[string]string, statestore state.St
 						req.Metadata = map[string]string{metadata.ContentType: scenario.contentType}
 					}
 					err := statestore.Set(req)
-					fmt.Println(err)
 					assert.Nil(t, err)
 				}
 			}
@@ -273,7 +271,6 @@ func ConformanceTests(t *testing.T, props map[string]string, statestore state.St
 						req.Metadata = map[string]string{metadata.ContentType: scenario.contentType}
 					}
 					res, err := statestore.Get(req)
-					fmt.Println(err)
 					assert.Nil(t, err)
 					assertEquals(t, scenario.value, res)
 				}
