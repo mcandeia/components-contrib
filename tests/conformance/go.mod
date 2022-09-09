@@ -4,13 +4,11 @@ go 1.19
 
 replace github.com/dapr/components-contrib => ../../
 
-replace github.com/dapr/dapr => github.com/mcandeia/dapr v0.0.0-20220908131426-74f653eed9cb
-
 replace github.com/eclipse/paho.mqtt.golang => github.com/shivamkm07/paho.mqtt.golang v1.3.6-0.20220106130409-e28a1db639f8
 
 require (
-	github.com/dapr/components-contrib v1.8.0-rc.1.0.20220826012745-bcea284c7b0c
-	github.com/dapr/dapr v1.8.4
+	github.com/dapr/components-contrib v1.8.2
+	github.com/dapr/dapr v1.8.4-0.20220909163359-efaca389cc32
 	github.com/dapr/kit v0.0.2
 	github.com/ghodss/yaml v1.0.0
 	github.com/google/uuid v1.3.0
@@ -59,7 +57,7 @@ require (
 	github.com/a8m/documentdb v1.3.1-0.20220405205223-5b41ba0aaeb1 // indirect
 	github.com/agrea/ptr v0.0.0-20180711073057-77a518d99b7b // indirect
 	github.com/andres-erbsen/clock v0.0.0-20160526145045-9e14626cd129 // indirect
-	github.com/andybalholm/brotli v1.0.2 // indirect
+	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/apache/pulsar-client-go v0.8.1 // indirect
 	github.com/apache/pulsar-client-go/oauth2 v0.0.0-20220120090717-25e59572242e // indirect
 	github.com/ardielle/ardielle-go v1.5.2 // indirect
@@ -160,7 +158,7 @@ require (
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
-	github.com/valyala/fasthttp v1.31.1-0.20211216042702-258a4c17b4f4 // indirect
+	github.com/valyala/fasthttp v1.34.0 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
 	github.com/xdg-go/scram v1.0.2 // indirect
 	github.com/xdg-go/stringprep v1.0.2 // indirect
