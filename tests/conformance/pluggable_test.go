@@ -43,8 +43,8 @@ func TestPluggableConformance(t *testing.T) {
 
 		operations, allOperations := []string{}, true
 		if operationsList, ok := os.LookupEnv("DAPR_CONFORMANCE_COMPONENT_OPERATIONS"); ok {
-			allOperations = false
 			require.NoError(t, yaml.Unmarshal([]byte(operationsList), &operations))
+			allOperations = len(operations) == 0
 		}
 		stateStore := state.NewGRPCStateStore(l, func(_ string) string {
 			return socket
