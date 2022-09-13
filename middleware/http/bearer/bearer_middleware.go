@@ -46,7 +46,7 @@ const (
 )
 
 // GetHandler retruns the HTTP handler provided by the middleware.
-func (m *Middleware) GetHandler(metadata middleware.Metadata) (func(h fasthttp.RequestHandler) fasthttp.RequestHandler, error) {
+func (m *Middleware) GetHandler(metadata middleware.Metadata) (func(h middleware.MiddlewareCtrl), error) {
 	meta, err := m.getNativeMetadata(metadata)
 	if err != nil {
 		return nil, err
@@ -61,24 +61,22 @@ func (m *Middleware) GetHandler(metadata middleware.Metadata) (func(h fasthttp.R
 		ClientID: meta.ClientID,
 	})
 
-	return func(h fasthttp.RequestHandler) fasthttp.RequestHandler {
-		return func(ctx *fasthttp.RequestCtx) {
-			authHeader := string(ctx.Request.Header.Peek(fasthttp.HeaderAuthorization))
-			if !strings.HasPrefix(strings.ToLower(authHeader), bearerPrefix) {
-				ctx.Error(fasthttp.StatusMessage(fasthttp.StatusUnauthorized), fasthttp.StatusUnauthorized)
+	return func(controller middleware.MiddlewareCtrl) {
+		authHeader := controller.GetHeaderValue(fasthttp.HeaderAuthorization)
+		if !strings.HasPrefix(strings.ToLower(authHeader), bearerPrefix) {
+			controller.Error(fasthttp.StatusMessage(fasthttp.StatusUnauthorized), fasthttp.StatusUnauthorized)
 
-				return
-			}
-			rawToken := authHeader[bearerPrefixLength:]
-			_, err := verifier.Verify(ctx, rawToken)
-			if err != nil {
-				ctx.Error(fasthttp.StatusMessage(fasthttp.StatusUnauthorized), fasthttp.StatusUnauthorized)
-
-				return
-			}
-
-			h(ctx)
+			return
 		}
+		rawToken := authHeader[bearerPrefixLength:]
+		_, err := verifier.Verify(controller.Context(), rawToken)
+		if err != nil {
+			controller.Error(fasthttp.StatusMessage(fasthttp.StatusUnauthorized), fasthttp.StatusUnauthorized)
+
+			return
+		}
+
+		controller.Next()
 	}, nil
 }
 

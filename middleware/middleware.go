@@ -13,11 +13,7 @@ limitations under the License.
 
 package middleware
 
-import (
-	"github.com/valyala/fasthttp"
-)
-
 // Middleware is the interface for a middleware.
 type Middleware interface {
-	GetHandler(metadata Metadata) (func(h fasthttp.RequestHandler) fasthttp.RequestHandler, error)
+	GetHandler(metadata Metadata) (func(controller MiddlewareCtrl), error)
 }
