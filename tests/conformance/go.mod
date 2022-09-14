@@ -2,6 +2,8 @@ module github.com/dapr/components-contrib/tests/conformance
 
 go 1.19
 
+replace github.com/dapr/dapr => github.com/mcandeia/dapr v0.0.0-20220913221641-0c6b9f5583c7
+
 replace github.com/dapr/components-contrib => ../../
 
 replace github.com/eclipse/paho.mqtt.golang => github.com/shivamkm07/paho.mqtt.golang v1.3.6-0.20220106130409-e28a1db639f8

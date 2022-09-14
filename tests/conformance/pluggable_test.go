@@ -17,11 +17,16 @@ import (
 	"os"
 	"testing"
 
+	confPubsub "github.com/dapr/components-contrib/tests/conformance/pubsub"
 	confState "github.com/dapr/components-contrib/tests/conformance/state"
 	"github.com/dapr/components-contrib/tests/conformance/utils"
+
+	"github.com/mitchellh/mapstructure"
 	"gopkg.in/yaml.v3"
 
+	"github.com/dapr/dapr/pkg/components/pubsub"
 	"github.com/dapr/dapr/pkg/components/state"
+
 	"github.com/dapr/kit/logger"
 
 	"github.com/stretchr/testify/require"
@@ -30,36 +35,62 @@ import (
 var l = logger.NewLogger("dapr-conformance-tests")
 
 func TestPluggableConformance(t *testing.T) {
+	socket := "/tmp/socket.sock"
+	if soc, ok := os.LookupEnv("DAPR_CONFORMANCE_COMPONENT_SOCKET"); ok {
+		socket = soc
+	}
+
+	var componentMetadata map[string]string
+	if metadata, ok := os.LookupEnv("DAPR_CONFORMANCE_COMPONENT_METADATA"); ok {
+		require.NoError(t, yaml.Unmarshal([]byte(metadata), &componentMetadata))
+	}
+
+	operations, allOperations := []string{}, true
+	if operationsList, ok := os.LookupEnv("DAPR_CONFORMANCE_COMPONENT_OPERATIONS"); ok {
+		require.NoError(t, yaml.Unmarshal([]byte(operationsList), &operations))
+		allOperations = len(operations) == 0
+	}
+
+	operationMap := make(map[string]struct{})
+
+	for _, op := range operations {
+		operationMap[op] = struct{}{}
+	}
+
+	common := utils.CommonConfig{
+		AllOperations: allOperations,
+		Operations:    operationMap,
+	}
+
+	additionalConfig := make(map[string]any)
+	if config, ok := os.LookupEnv("DAPR_CONFORMANCE_COMPONENT_CONFIG"); ok {
+		require.NoError(t, yaml.Unmarshal([]byte(config), &additionalConfig))
+	}
+
+	t.Run("pubsub", func(t *testing.T) {
+		pubsub := pubsub.NewGRPCPubSub(l, func(_ string) string {
+			return socket
+		})
+		testConf := confPubsub.TestConfig{
+			CommonConfig: common,
+		}
+
+		require.NoError(t, mapstructure.Decode(additionalConfig, &testConf))
+
+		confPubsub.ConformanceTests(t, componentMetadata, pubsub, testConf)
+	})
+
 	t.Run("state", func(t *testing.T) {
-		socket := "/tmp/socket.sock"
-		if soc, ok := os.LookupEnv("DAPR_CONFORMANCE_COMPONENT_SOCKET"); ok {
-			socket = soc
-		}
-
-		var componentMetadata map[string]string
-		if metadata, ok := os.LookupEnv("DAPR_CONFORMANCE_COMPONENT_METADATA"); ok {
-			require.NoError(t, yaml.Unmarshal([]byte(metadata), &componentMetadata))
-		}
-
-		operations, allOperations := []string{}, true
-		if operationsList, ok := os.LookupEnv("DAPR_CONFORMANCE_COMPONENT_OPERATIONS"); ok {
-			require.NoError(t, yaml.Unmarshal([]byte(operationsList), &operations))
-			allOperations = len(operations) == 0
-		}
 		stateStore := state.NewGRPCStateStore(l, func(_ string) string {
 			return socket
 		})
 
-		operationMap := make(map[string]struct{})
-
-		for _, op := range operations {
-			operationMap[op] = struct{}{}
+		testConf := confState.TestConfig{
+			CommonConfig: common,
 		}
-		confState.ConformanceTests(t, componentMetadata, stateStore, confState.TestConfig{
-			CommonConfig: utils.CommonConfig{
-				AllOperations: allOperations,
-				Operations:    operationMap,
-			},
-		})
+
+		require.NoError(t, mapstructure.Decode(additionalConfig, &testConf))
+
+		confState.ConformanceTests(t, componentMetadata, stateStore, testConf)
 	})
 }
