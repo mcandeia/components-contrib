@@ -63,7 +63,7 @@ func TestPluggableConformance(t *testing.T) {
 	}
 
 	additionalConfig := make(map[string]any)
-	if config, ok := os.LookupEnv("DAPR_CONFORMANCE_COMPONENT_CONFIG"); ok {
+	if config, ok := os.LookupEnv("DAPR_CONFORMANCE_COMPONENT_CONFIG"); ok && len(config) != 0 {
 		require.NoError(t, yaml.Unmarshal([]byte(config), &additionalConfig))
 	}
 
