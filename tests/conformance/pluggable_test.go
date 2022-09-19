@@ -17,6 +17,7 @@ import (
 	"os"
 	"testing"
 
+	confBindings "github.com/dapr/components-contrib/tests/conformance/bindings"
 	confPubsub "github.com/dapr/components-contrib/tests/conformance/pubsub"
 	confState "github.com/dapr/components-contrib/tests/conformance/state"
 	"github.com/dapr/components-contrib/tests/conformance/utils"
@@ -24,6 +25,7 @@ import (
 	"github.com/mitchellh/mapstructure"
 	"gopkg.in/yaml.v3"
 
+	"github.com/dapr/dapr/pkg/components/bindings"
 	"github.com/dapr/dapr/pkg/components/pubsub"
 	"github.com/dapr/dapr/pkg/components/state"
 
@@ -92,5 +94,20 @@ func TestPluggableConformance(t *testing.T) {
 		require.NoError(t, mapstructure.Decode(additionalConfig, &testConf))
 
 		confState.ConformanceTests(t, componentMetadata, stateStore, testConf)
+	})
+
+	t.Run("bindings", func(t *testing.T) {
+		inputBinding := bindings.NewGRPCInputBinding(l, func(_ string) string {
+			return socket
+		})
+		outputBinding := bindings.NewGRPCOutputBinding(l, func(_ string) string {
+			return socket
+		})
+		testConf := confBindings.TestConfig{
+			CommonConfig: common,
+		}
+
+		require.NoError(t, mapstructure.Decode(additionalConfig, &testConf))
+		confBindings.ConformanceTests(t, componentMetadata, inputBinding, outputBinding, testConf)
 	})
 }
