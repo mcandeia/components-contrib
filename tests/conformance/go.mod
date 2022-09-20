@@ -2,7 +2,7 @@ module github.com/dapr/components-contrib/tests/conformance
 
 go 1.19
 
-replace github.com/dapr/dapr => /Users/marcoscandeia/workspace/dapr/
+replace github.com/dapr/dapr => github.com/mcandeia/dapr v0.0.0-20220919221907-415dfe742806
 
 replace github.com/dapr/components-contrib => ../../
 
@@ -178,7 +178,7 @@ require (
 	golang.org/x/time v0.0.0-20220210224613-90d013bbcef8 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20220622171453-ea41d75dfa0f // indirect
-	google.golang.org/grpc v1.47.0 // indirect
+	google.golang.org/grpc v1.48.0 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/fatih/pool.v2 v2.0.0 // indirect
 	gopkg.in/gorethink/gorethink.v4 v4.1.0 // indirect
