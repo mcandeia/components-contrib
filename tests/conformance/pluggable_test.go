@@ -103,6 +103,7 @@ func TestPluggableConformance(t *testing.T) {
 		outputBinding := bindings.NewGRPCOutputBinding(l, func(_ string) string {
 			return socket
 		})
+
 		testConf := confBindings.TestConfig{
 			CommonConfig: common,
 		}

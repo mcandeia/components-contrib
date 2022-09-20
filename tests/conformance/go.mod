@@ -2,7 +2,7 @@ module github.com/dapr/components-contrib/tests/conformance
 
 go 1.19
 
-replace github.com/dapr/dapr => github.com/mcandeia/dapr v0.0.0-20220919221907-415dfe742806
+replace github.com/dapr/dapr => /Users/marcoscandeia/workspace/dapr/
 
 replace github.com/dapr/components-contrib => ../../
 
