@@ -8,7 +8,7 @@ replace github.com/eclipse/paho.mqtt.golang => github.com/shivamkm07/paho.mqtt.g
 
 require (
 	github.com/dapr/components-contrib v1.8.2
-	github.com/dapr/dapr v1.8.4-0.20220926041503-51289b9249de
+	github.com/dapr/dapr v1.8.4-0.20220927025107-d4dceb66b590
 	github.com/dapr/kit v0.0.2
 	github.com/ghodss/yaml v1.0.0
 	github.com/google/uuid v1.3.0

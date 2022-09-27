@@ -70,9 +70,7 @@ func TestPluggableConformance(t *testing.T) {
 	}
 
 	t.Run("pubsub", func(t *testing.T) {
-		pubsub := pubsub.NewGRPCPubSub(l, func(_ string) string {
-			return socket
-		})
+		pubsub := pubsub.NewGRPCPubSub(l, socket)
 		testConf := confPubsub.TestConfig{
 			CommonConfig: common,
 		}
@@ -83,9 +81,7 @@ func TestPluggableConformance(t *testing.T) {
 	})
 
 	t.Run("state", func(t *testing.T) {
-		stateStore := state.NewGRPCStateStore(l, func(_ string) string {
-			return socket
-		})
+		stateStore := state.NewGRPCStateStore(l, socket)
 
 		testConf := confState.TestConfig{
 			CommonConfig: common,
@@ -97,12 +93,8 @@ func TestPluggableConformance(t *testing.T) {
 	})
 
 	t.Run("bindings", func(t *testing.T) {
-		inputBinding := bindings.NewGRPCInputBinding(l, func(_ string) string {
-			return socket
-		})
-		outputBinding := bindings.NewGRPCOutputBinding(l, func(_ string) string {
-			return socket
-		})
+		inputBinding := bindings.NewGRPCInputBinding(l, socket)
+		outputBinding := bindings.NewGRPCOutputBinding(l, socket)
 
 		testConf := confBindings.TestConfig{
 			CommonConfig: common,
